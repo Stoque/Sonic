@@ -1,26 +1,30 @@
+/*  Syntax Quick Reference for Jeet
+    --------------------------
+    column(ratios = 1, offset = 0, cycle = 0, uncycle = 0, gutter = jeet.gutter)
+    span(ratio = 1, offset = 0)
+    shift(ratios = 0, col_or_span = column, gutter = jeet.gutter)
+    unshift()
+    edit()
+    center(max_width = 1410px, pad = 0)
+    stack(pad = 0, align = false)
+    unstack()
+    align(direction = both)
+    cf()
+    For more info see:
+        Kouto Swiss Doc: http://kouto-swiss.io/
+        Jeet Doc: http://jeet.gs
+    And of course, look in node_modules for axis-css and jeet
+*/
 *,
 *:after,
 *:before {
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 .container {
   max-width: 1200px;
   margin: 0 auto;
-}
-.footer {
-  background: #00f;
-  height: 100px;
-  width: 100%;
-}
-.header {
-  background: #f00;
-  height: 100px;
-  width: 100%;
-}
-.main {
-  background: #f00;
-  height: 100px;
-  width: 100%;
 }

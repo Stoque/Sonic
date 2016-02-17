@@ -1,29 +1,29 @@
-// Call plugins
+// =========================
+// Modules
+// =========================
+
 var gulp 				= require('gulp'),
 		stylus 			= require('gulp-stylus'),
+		prefixer 		= require('autoprefixer-stylus'),
 		jeet				= require('jeet'),
 		rupture			= require('rupture'),
+		koutoSwiss 	= require('kouto-swiss')
+		uglify 			= require('gulp-uglify'),
+		concat			= require('gulp-concat'),
+		imagemin		= require('gulp-imagemin'),
+		pngquant		= require('imagemin-pngquant'),
 		browserSync = require('browser-sync');
 
-// Call Stylus
-gulp.task('stylus', function() {
-	gulp.src('app/src/stylus/main.styl')
-		.pipe(stylus({
-			use: [jeet(), rupture()]
-			//,compress:true  // MINIFICANDO CSS
-		})) 
-		.pipe(gulp.dest('app/assets/stylesheets'));
-});
+// Directories
 
-// Call Stylus Build witch compress:true
-gulp.task('stylus-build', function() {
-	gulp.src('app/src/stylus/main.styl')
-		.pipe(stylus({
-			use: [jeet(), rupture()],
-			compress:true  // minificando css
-		})) 
-		.pipe(gulp.dest('app/assets/stylesheets'));
-});
+path = {
+	dev		: 'app/src',
+	prod	: 'app/assets'
+}
+
+// =========================
+// Tasks
+// =========================
 
 // Call Browser-Sync
 gulp.task('browser-sync', function() {
@@ -32,16 +32,46 @@ gulp.task('browser-sync', function() {
 			tunnel: true,
 			baseDir: 'app'
 		}
-	});
+	})
+});
+
+// Call Stylus
+gulp.task('stylus', function() {
+	gulp.src( path.dev + '/stylus/main.styl')
+		.pipe(stylus({
+			use: [jeet(), rupture(), koutoSwiss()],
+			// compress:true  // minificando css
+		})) 
+		.pipe(gulp.dest( path.prod + '/stylesheets'));
+});
+
+// Call javascript uglify and concat
+gulp.task('js', function(){
+	return gulp.src(path.dev + '/javascripts/*.js')
+		.pipe(concat('main.js'))
+		.pipe(uglify())
+		.pipe(gulp.dest( path.prod + '/javascripts'))
+});
+
+// Call task Imagemin
+gulp.task('imagemin', function() {
+	return gulp.src( path.dev + '/images/**/*')
+		.pipe(imagemin({ 
+			optimizationLevel: 5, 
+			progressive: true, 
+			interlaced: true,
+			use: [pngquant()]
+		}))
+		.pipe(gulp.dest( path.prod + '/images/'));
 });
 
 // Call Watch
 gulp.task('watch', ['stylus', 'browser-sync'], function() {
-	gulp.watch('./app/src/stylus/**/**.styl', ['stylus']);
+	gulp.watch( path.dev + '/stylus/**/**.styl', ['stylus']);
+	gulp.watch( path.dev + '/javascripts/**/*.js', ['js']);
+	gulp.watch( path.dev + '/images/**/*.{jpg,png,gif}', ['imagemin']);
+	gulp.watch('./app/*.html')
 });
 
 //Default Task
-gulp.task('default', ['stylus', 'browser-sync', 'watch']);
-
-//Build Task
-gulp.task('build', ['stylus-build', 'browser-sync', 'watch']);
+gulp.task('default', ['js','stylus', 'imagemin', 'browser-sync', 'watch']);
