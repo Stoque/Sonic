@@ -16,9 +16,10 @@
     And of course, look in node_modules for axis-css and jeet
 */
 	
+@import 'kouto-swiss'
 @import 'jeet'
 @import 'rupture'
-@import 'kouto-swiss'
+normalize()
 
 // Import base 
 @import "base/**"
@@ -29,3 +30,14 @@
 // Import modules 
 @import "modules/_header"
  		
+body
+	font-family Roboto, 'sans-serif'
+	height 100%
+	width 100%
+	
+h1
+	font-size rem(50px)
+	text-transform uppercase
+	margin 0
+	padding 0
+
