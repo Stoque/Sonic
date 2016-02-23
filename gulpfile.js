@@ -38,6 +38,7 @@ gulp.task('browser-sync', function() {
 // Call Stylus
 gulp.task('stylus', function() {
 	gulp.src( path.dev + '/stylus/main.styl')
+		.pipe(plumber())
 		.pipe(stylus({
 			use: [jeet(), rupture(), koutoSwiss()],
 			// compress:true  // minificando css
