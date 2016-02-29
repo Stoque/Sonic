@@ -6,6 +6,7 @@ var gulp 				= require('gulp'),
 		stylus 			= require('gulp-stylus'),
 		prefixer 		= require('autoprefixer-stylus'),
 		jeet				= require('jeet'),
+		plumber			= require('gulp-plumber'),
 		rupture			= require('rupture'),
 		koutoSwiss 	= require('kouto-swiss')
 		uglify 			= require('gulp-uglify'),
