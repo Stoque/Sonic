@@ -29,10 +29,16 @@ path = {
 // Call Browser-Sync
 gulp.task('browser-sync', function() {
 	browserSync.init(['app/assets/stylesheets/*.css', 'app/*.html'], {
+		notify: {
+			styles: {
+				top: 'auto',
+				bottom: '0'
+			}
+		},
 		server: {
-			tunnel: true,
-			baseDir: 'app'
-		}
+			 baseDir: 'app'
+		},
+		tunnel: true
 	})
 });
 
