@@ -13,6 +13,7 @@ var gulp 				= require('gulp'),
 		concat			= require('gulp-concat'),
 		imagemin		= require('gulp-imagemin'),
 		pngquant		= require('imagemin-pngquant'),
+		gcmq 				= require('gulp-group-css-media-queries'),
 		browserSync = require('browser-sync');
 
 // Directories
@@ -50,6 +51,7 @@ gulp.task('stylus', function() {
 			use: [jeet(), rupture(), koutoSwiss()],
 			// compress:true  // minificando css
 		})) 
+		.pipe(gcmq())
 		.pipe(gulp.dest( path.prod + '/stylesheets'));
 });
 
