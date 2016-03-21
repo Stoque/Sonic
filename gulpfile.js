@@ -58,6 +58,7 @@ gulp.task('stylus', function() {
 // Call javascript uglify and concat
 gulp.task('js', function(){
 	return gulp.src(path.dev + '/javascripts/*.js')
+		.pipe(plumber())
 		.pipe(concat('main.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest( path.prod + '/javascripts'))
