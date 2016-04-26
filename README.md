@@ -2,7 +2,7 @@
 
 # Sonic Boilerplate
 
-A simple boilerplate to create projects with Gulp, Stylus, Jeet and Rupture.
+A simple boilerplate to create projects with [Gulp](https://github.com/gulpjs/gulp), [Stylus](https://github.com/stylus/stylus), [Lost](https://github.com/peterramsing/lost) and [Rupture](https://github.com/jenius/rupture).
 
 ## Getting Started
 
