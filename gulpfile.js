@@ -4,6 +4,7 @@
 
 var gulp 				= require('gulp'),
 		stylus 			= require('gulp-stylus'),
+		cssmin			= require('gulp-cssmin'),
 		prefixer 		= require('autoprefixer-stylus'),
 		jeet				= require('jeet'),
 		plumber			= require('gulp-plumber'),
@@ -14,10 +15,10 @@ var gulp 				= require('gulp'),
 		imagemin		= require('gulp-imagemin'),
 		pngquant		= require('imagemin-pngquant'),
 		gcmq 				= require('gulp-group-css-media-queries'),
+		rename			= require('gulp-rename'),
 		browserSync = require('browser-sync');
 
 // Directories
-
 path = {
 	dev		: 'app/src',
 	prod	: 'app/assets'
@@ -29,7 +30,7 @@ path = {
 
 // Call Browser-Sync
 gulp.task('browser-sync', function() {
-	browserSync.init(['app/assets/stylesheets/*.css', 'app/*.html'], {
+	browserSync.init(['app/assets/styles/*.css', 'app/assets/scripts/*.js', 'app/*.html'], {
 		notify: {
 			styles: {
 				top: 'auto',
@@ -38,8 +39,7 @@ gulp.task('browser-sync', function() {
 		},
 		server: {
 			 baseDir: 'app'
-		},
-		tunnel: true
+		}
 	})
 });
 
@@ -48,41 +48,49 @@ gulp.task('stylus', function() {
 	gulp.src( path.dev + '/stylus/main.styl')
 		.pipe(plumber())
 		.pipe(stylus({
-			use: [jeet(), rupture(), koutoSwiss()],
-			// compress:true  // minificando css
+			use:[jeet(), prefixer(), rupture(), koutoSwiss()]
 		})) 
 		.pipe(gcmq())
-		.pipe(gulp.dest( path.prod + '/stylesheets'));
+		.pipe(gulp.dest(path.prod + '/styles'));
+});
+
+// Call CSS minify
+gulp.task('css-min', function() {
+	gulp.src( path.prod + '/styles/main.css')
+		.pipe(cssmin())
+		.pipe(rename({suffix: '.min'}))
+		.pipe(gulp.dest(path.prod + '/styles'));
 });
 
 // Call javascript uglify and concat
 gulp.task('js', function(){
-	return gulp.src(path.dev + '/javascripts/*.js')
+	return gulp.src(path.dev + '/scripts/**/*.js')
 		.pipe(plumber())
 		.pipe(concat('main.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest( path.prod + '/javascripts'))
+		.pipe(gulp.dest(path.prod + '/scripts'))
 });
 
 // Call task Imagemin
 gulp.task('imagemin', function() {
-	return gulp.src( path.dev + '/images/**/*')
+	return gulp.src(path.dev + '/images/**/*')
 		.pipe(imagemin({ 
 			optimizationLevel: 5, 
 			progressive: true, 
 			interlaced: true,
 			use: [pngquant()]
 		}))
-		.pipe(gulp.dest( path.prod + '/images/'));
+		.pipe(gulp.dest(path.prod + '/images/'));
 });
 
 // Call Watch
 gulp.task('watch', ['stylus', 'browser-sync'], function() {
 	gulp.watch( path.dev + '/stylus/**/**.styl', ['stylus']);
-	gulp.watch( path.dev + '/javascripts/**/*.js', ['js']);
+	gulp.watch( path.dev + '/scripts/**/*.js', ['js']);
 	gulp.watch( path.dev + '/images/**/*.{jpg,png,gif}', ['imagemin']);
-	gulp.watch('./app/*.html')
+	gulp.watch('./app/*.html');
+	gulp.watch( path.prod + '/styles/main.css', ['css-min'])
 });
 
 //Default Task
-gulp.task('default', ['js','stylus', 'imagemin', 'browser-sync', 'watch']);
+gulp.task('default', ['js','stylus', 'css-min', 'browser-sync', 'watch']);
