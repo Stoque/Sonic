@@ -10,7 +10,7 @@ A simple boilerplate to create projects with Gulp, Stylus, Jeet and Rupture.
 
 ```
 # Clone this repository
-$ git clone git@github.com:Stoque/Sonic.git new_project
+$ git clone git@github.com:stoque/Sonic.git new_project
 $ cd new_project
 
 # install gulp globally
