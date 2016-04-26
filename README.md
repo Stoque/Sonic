@@ -1,4 +1,4 @@
-![Sonic](http://cdn.scratch.mit.edu/static/site/users/avatars/237/0600.png)
+![Sonic](http://orig12.deviantart.net/0fb0/f/2013/221/b/7/classic_sonic_run_by_vicenticotd-d6hd44u.gif)
 
 # Sonic Boilerplate
 
