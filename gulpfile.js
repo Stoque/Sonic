@@ -4,9 +4,9 @@
 
 var gulp 				= require('gulp'),
 		stylus 			= require('gulp-stylus'),
+		poststylus	= require('poststylus'),
 		cssmin			= require('gulp-cssmin'),
 		prefixer 		= require('autoprefixer-stylus'),
-		jeet				= require('jeet'),
 		plumber			= require('gulp-plumber'),
 		rupture			= require('rupture'),
 		koutoSwiss 	= require('kouto-swiss')
@@ -48,7 +48,7 @@ gulp.task('stylus', function() {
 	gulp.src( path.dev + '/stylus/main.styl')
 		.pipe(plumber())
 		.pipe(stylus({
-			use:[jeet(), prefixer(), rupture(), koutoSwiss()]
+			use:[prefixer(), rupture(), koutoSwiss(), poststylus('lost')]
 		})) 
 		.pipe(gcmq())
 		.pipe(gulp.dest(path.prod + '/styles'));
