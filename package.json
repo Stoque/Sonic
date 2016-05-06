@@ -1,20 +1,20 @@
 {
-  "name": "Sonic Boilerplate",
+  "name": "Sonic-Boilerplate",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Stoque/Sonic"
+    "url": "git+https://github.com/stoque/sonic-boilerplate"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Stoque/Sonic/issues"
+    "url": "https://github.com/stoque/sonic-boilerplate/issues"
   },
-  "homepage": "https://github.com/Stoque/Sonic#readme",
+  "homepage": "https://github.com/sonic-boilerplate/Sonic#readme",
   "devDependencies": {
     "autoprefixer-stylus": "^0.9.1",
     "browser-sync": "^2.11.1",
